@@ -97,8 +97,11 @@ class Parser {
   }
   statements() {
     this.node('statements', () => {
-      while (this.match('let', 'return')) {
+      while (this.match('let', 'if', 'while', 'do', 'return')) {
         if (this.match('let')) this.letStatement();
+        else if (this.match('if')) this.ifStatement();
+        else if (this.match('while')) this.whileStatement();
+        else if (this.match('do')) this.doStatement();
         else this.returnStatement();
       }
     });
@@ -109,6 +112,22 @@ class Parser {
       if (this.match('[')) { this.consume('['); this.expression(); this.consume(']'); }
       this.consume('='); this.expression(); this.consume(';');
     });
+  }
+  ifStatement() {
+    this.node('ifStatement', () => {
+      this.consume('if'); this.consume('('); this.expression(); this.consume(')');
+      this.consume('{'); this.statements(); this.consume('}');
+      if (this.match('else')) { this.consume('else'); this.consume('{'); this.statements(); this.consume('}'); }
+    });
+  }
+  whileStatement() {
+    this.node('whileStatement', () => {
+      this.consume('while'); this.consume('('); this.expression(); this.consume(')');
+      this.consume('{'); this.statements(); this.consume('}');
+    });
+  }
+  doStatement() {
+    this.node('doStatement', () => { this.consume('do'); this.subroutineCall(); this.consume(';'); });
   }
   returnStatement() {
     this.node('returnStatement', () => {
@@ -128,11 +147,21 @@ class Parser {
       const token = this.peek();
       if (!token) this.fail('termo esperado');
       if (this.matchType('integerConstant', 'integer', 'int', 'stringConstant', 'string')) {
-        this.consume(['stringConstant', 'string'].includes(token.type) ? 'stringConstant' : 'integerConstant');
+        const expected = ['stringConstant', 'string'].includes(token.type) ? 'stringConstant' : 'integerConstant';
+        this.consume(expected);
       } else if (this.match('true', 'false', 'null', 'this')) {
         this.consume(this.peek().value);
+      } else if (this.match('(')) {
+        this.consume('('); this.expression(); this.consume(')');
+      } else if (this.match('-', '~')) {
+        this.consume(this.peek().value); this.term();
       } else if (this.matchType('identifier')) {
-        this.consume('identifier');
+        const next = this.peek(1);
+        if (next && ['(', '.'].includes(next.value)) this.subroutineCall();
+        else {
+          this.consume('identifier');
+          if (this.match('[')) { this.consume('['); this.expression(); this.consume(']'); }
+        }
       } else this.fail(`termo inválido: ${token.value}`);
     });
   }
