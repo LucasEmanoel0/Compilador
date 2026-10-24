@@ -1,0 +1,12 @@
+const fs = require('node:fs');
+const Parser = require('../../src/parser/Parser');
+const input = process.argv[2] || 'MainT.xml';
+const output = process.argv[3] || 'Main_gerado.xml';
+const xml = fs.readFileSync(input, 'utf8');
+const decode = s => s.replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&apos;/g,"'").replace(/&amp;/g,'&');
+const regex = /<(keyword|symbol|identifier|integerConstant|stringConstant)>([\s\S]*?)<\/\1>/g;
+const tokens = [...xml.matchAll(regex)].map((m,i) => ({type:m[1],value:decode(m[2].trim()),line:i+1,column:1}));
+if (!tokens.length) throw new Error('Nenhum token reconhecido no arquivo ' + input);
+const result = new Parser(tokens).parse();
+fs.writeFileSync(output, result+'\n', 'utf8');
+console.log(`OK: ${tokens.length} tokens analisados; XML salvo em ${output}`);
