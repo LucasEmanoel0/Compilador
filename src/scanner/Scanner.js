@@ -1,3 +1,22 @@
+const SYMBOLS = new Set([
+    "{", "}", "(", ")", "[", "]",
+    ".", ",", ";", "+", "-", "*", "/",
+    "&", "|", "<", ">", "=", "~"
+]);
+
+const KEYWORDS = new Set([
+    "class", "constructor", "function", "method",
+    "field", "static", "var", "int", "char",
+    "boolean", "void", "true", "false", "null",
+    "this", "let", "do", "if", "else", "while",
+    "return"
+]);
+
+
+
+
+
+
 class Scanner {
     constructor(source) {
         this.source = source;
