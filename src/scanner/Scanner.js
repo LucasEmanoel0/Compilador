@@ -26,6 +26,28 @@ class Scanner {
         this.line = 1;
         this.column = 1;
     }
+
+    peek() {
+    return this.source[this.position];
+}
+
+advance() {
+    let char = this.source[this.position];
+    this.position++;
+
+    if (char === "\n") {
+        this.line++;
+        this.column = 1;
+    } else {
+        this.column++;
+    }
+
+    return char;
+}
+
+isAtEnd() {
+    return this.position >= this.source.length;
+}
 }
 
 module.exports = Scanner;
