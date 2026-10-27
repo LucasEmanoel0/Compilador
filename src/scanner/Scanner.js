@@ -97,6 +97,26 @@ readIdentifier() {
         column: this.column - word.length
     });
 }
+readString() {
+    while (!this.isAtEnd() && this.peek() !== '"' && this.peek() !== "\n") {
+        this.advance();
+    }
+
+    if (this.isAtEnd() || this.peek() === "\n") {
+        throw new Error("String não fechada");
+    }
+
+    const value = this.source.slice(this.start + 1, this.position);
+
+    this.advance();
+
+    this.tokens.push({
+        type: "stringConstant",
+        value: value,
+        line: this.line,
+        column: this.column - value.length - 2
+    });
+}
 }
 
 module.exports = Scanner;
