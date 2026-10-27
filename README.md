@@ -136,6 +136,8 @@ Foram realizados testes para verificar o reconhecimento dos tokens, a análise s
 
 Execute os comandos a partir da raiz do projeto.
 
+**Observação sobre a validação do SquareGame:** dos sete casos comparados, seis apresentaram equivalência estrutural com os XMLs de referência. No caso `Square/SquareGame.xml`, foi identificada uma incompatibilidade entre o arquivo de tokens (`SquareGameT.xml`) e a árvore sintática de referência (`SquareGame.xml`), incluindo valores diferentes (`81` e `113`). O XML produzido pelo Parser preservou os 313 tokens de entrada, na mesma ordem, e foi confirmado como bem-formado. A divergência permanece registrada e não foi contabilizada como teste aprovado.
+
 ### Testes do Scanner
 
 Para executar os testes de erros léxicos:
