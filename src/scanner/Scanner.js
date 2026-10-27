@@ -48,6 +48,31 @@ advance() {
 isAtEnd() {
     return this.position >= this.source.length;
 }
+
+isDigit(char) {
+    return /[0-9]/.test(char);
+}
+
+readNumber() {
+    while (!this.isAtEnd() && this.isDigit(this.peek())) {
+        this.advance();
+    }
+
+    const number = this.source.slice(this.start, this.position);
+
+    if (Number(number) > 32767) {
+        throw new Error(
+            `Número inteiro fora do limite: ${number} na linha ${this.line}`
+        );
+    }
+
+    this.tokens.push({
+        type: "integerConstant",
+        value: number,
+        line: this.line,
+        column: this.column - number.length
+    });
+}
 }
 
 module.exports = Scanner;
