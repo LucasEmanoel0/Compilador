@@ -117,6 +117,28 @@ readString() {
         column: this.column - value.length - 2
     });
 }
+skipLineComment() {
+    while (!this.isAtEnd() && this.peek() !== "\n") {
+        this.advance();
+    }
+}
+
+skipBlockComment() {
+    while (!this.isAtEnd()) {
+        if (
+            this.peek() === "*" &&
+            this.source[this.position + 1] === "/"
+        ) {
+            this.advance();
+            this.advance();
+            return;
+        }
+
+        this.advance();
+    }
+
+    throw new Error("Comentário de bloco não fechado");
+}
 }
 
 module.exports = Scanner;
