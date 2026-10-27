@@ -1,4 +1,4 @@
-# Compilador Jack — Analisador Sintático e Geração XML
+# Compilador Jack — Analisador Léxico, Sintático e Geração XML
 
 ## Sobre o projeto
 
@@ -13,6 +13,7 @@ O projeto é dividido em duas partes principais:
 
 Minha responsabilidade no projeto foi desenvolver o analisador sintático e a geração de XML.
 
+
 ### Funcionalidades implementadas
 
 - Leitura e navegação pelos tokens.
@@ -25,49 +26,131 @@ Minha responsabilidade no projeto foi desenvolver o analisador sintático e a ge
 - Tratamento de caracteres especiais no XML.
 - Identificação de erros sintáticos.
 
+
+## Minha contribuição — Scanner e integração
+
+Minha responsabilidade no projeto foi desenvolver o analisador léxico (Scanner) da linguagem Jack, implementar testes de validação e realizar a integração com o Parser e o XmlWriter.
+
+
+### Funcionalidades implementadas
+
+- Reconhecimento de palavras reservadas (keywords) da linguagem Jack.
+
+- Identificação de símbolos e operadores.
+
+- Reconhecimento de identificadores.
+
+- Leitura de constantes inteiras, com validação do limite de 0 a 32767.
+
+- Reconhecimento de constantes de texto (strings).
+
+- Ignorar comentários de linha (//) e de bloco (/* ... */).
+
+- Rastreamento de linhas e colunas dos tokens.
+
+- Identificação de caracteres inválidos.
+
+- Tratamento de strings e comentários de bloco não fechados.
+
+- Geração de tokens compatíveis com o Parser.
+
+- Integração dos componentes Scanner, Parser e XmlWriter.
+
+### Testes realizados
+
+Foram realizados testes de tokenização de programas Jack e de tratamento de erros léxicos.
+
+Os testes verificaram o reconhecimento dos tokens e situações como números acima do limite permitido, strings não fechadas, comentários de bloco não fechados e caracteres inválidos.
+
+A integração também foi testada com um programa Jack contendo declarações de variáveis, atribuições, chamadas de sub-rotinas e retorno, gerando sua representação XML.
+
+
+
 ## Estrutura do projeto
 
 ```text
 Compilador/
 ├── src/
-│   ├── lexer/
+│   ├── scanner/
 │   │   └── Scanner.js
-│   ├── parser/
-│   │   ├── Parser.js
-│   │   └── XmlWriter.js
-│   └── main.js
-├── tests/
 │   └── parser/
+│       ├── Parser.js
+│       └── XmlWriter.js
+├── tests/
+│   ├── scanner/
+│   │   └── erros.test.js
+│   └── parser/
+│       ├── referencias/
 │       ├── testes_avancados.js
 │       ├── comparar_oficial.js
 │       ├── validar_oficial.py
 │       └── validar_todos.py
-├── README.md
-└── package.json
+├── main.js
+├── teste.js
+└── README.md
 ```
 
-*Observação: Scanner.js e main.js fazem parte da estrutura prevista para integração com os demais componentes.*
+O arquivo `main.js` é responsável por integrar o Scanner, o Parser e o XmlWriter, permitindo executar a análise completa de um programa Jack e gerar sua representação XML.
+
+## Como executar o projeto
+
+Com o Node.js instalado, execute os comandos a partir da raiz do repositório.
+
+### Executar o Scanner
+
+```bash
+node teste.js
+```
+
+### Executar a integração completa
+
+```bash
+node main.js
+```
+
+O Scanner identifica os tokens, o Parser analisa as estruturas sintáticas e o XmlWriter gera a representação XML do programa.
 
 ## Testes e validação
 
-Foram desenvolvidos testes para verificar o reconhecimento das estruturas sintáticas, a geração de XML e o tratamento de entradas inválidas.
+Foram realizados testes para verificar o reconhecimento dos tokens, a análise sintática, a geração de XML e o tratamento de entradas inválidas.
 
-Para executar os testes locais, a partir da raiz do projeto:
+Execute os comandos a partir da raiz do projeto.
+
+### Testes do Scanner
+
+Para executar os testes de erros léxicos:
+
+```bash
+node tests/scanner/erros.test.js
+```
+
+Os quatro testes foram aprovados, verificando números acima do limite permitido, strings não fechadas, comentários de bloco não fechados e caracteres inválidos.
+
+### Testes do Parser
 
 ```bash
 node tests/parser/testes_avancados.js
 ```
 
-Para executar a validação com exemplos oficiais:
+Foram executados oito testes avançados, todos aprovados.
+
+### Validação com referências oficiais
 
 ```bash
-cd tests/parser
-python validar_todos.py
+python tests/parser/validar_todos.py
 ```
 
-A validação oficial requer Python 3 e acesso à internet para obter os arquivos de referência.
+A validação requer Python 3 e acesso à internet para obter os arquivos de referência, quando necessário.
 
-## Histórico de desenvolvimento
+Na validação realizada, seis dos sete casos foram aprovados.
+
+O caso `Square/SquareGame.xml` apresentou uma diferença: o arquivo de entrada `SquareGameT.xml` possui 313 tokens, enquanto o XML oficial de referência contém 356 tokens.
+
+O Parser preservou os 313 tokens recebidos, indicando uma incompatibilidade entre os arquivos utilizados na comparação.
+
+Essa diferença permanece documentada para investigação.
+
+## Histórico de desenvolvimento — Parser e XmlWriter
 
 O desenvolvimento da minha parte foi organizado em quatro etapas:
 
