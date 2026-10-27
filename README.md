@@ -1,3 +1,12 @@
+Integrantes do grupo
+
+Integrante 1: Lucas Emanoel Amaral Gomes — Matrícula: 20250071250
+
+Integrante 2: [Nome completo] — Matrícula: [Número]
+
+
+
+
 # Compilador Jack — Analisador Léxico, Sintático e Geração XML
 
 ## Sobre o projeto
@@ -170,6 +179,23 @@ O desenvolvimento da minha parte foi organizado em quatro etapas:
 3. **Etapa 3:** ampliação da análise sintática e inclusão dos testes.
 4. **Etapa 4:** validação final, comparação com exemplos oficiais e documentação.
 
+
+
+
+## Desafios enfrentados durante a unidade
+
+Durante o desenvolvimento do compilador Jack, enfrentamos desafios relacionados à análise léxica, à análise sintática e à integração dos componentes.
+
+Um dos principais desafios foi implementar o Scanner para reconhecer corretamente palavras reservadas, identificadores, símbolos e constantes, além de tratar erros como strings não fechadas, comentários incompletos e valores inteiros inválidos.
+
+Na implementação do Parser, foi necessário compreender a gramática da linguagem Jack e aplicar a técnica de análise descendente recursiva (*recursive descent parsing*), garantindo o reconhecimento correto de declarações, comandos e expressões.
+
+Outro desafio foi integrar o Scanner ao Parser e ao XmlWriter, permitindo que um arquivo `.jack` fosse processado e convertido em um arquivo `.xml` com a estrutura exigida pelo Nand2Tetris.
+
+Durante a validação, utilizamos testes automatizados e comparações com arquivos oficiais. Identificamos uma divergência no exemplo `SquareGame`, relacionada à diferença entre os tokens da entrada utilizada e os presentes no XML de referência. Essa situação foi documentada para investigação.
+
+Esses desafios contribuíram para o aprendizado sobre compiladores, organização modular, tratamento de erros, testes automatizados e versionamento com Git e GitHub.
+
 ## Tecnologias utilizadas
 
 - JavaScript
@@ -178,6 +204,12 @@ O desenvolvimento da minha parte foi organizado em quatro etapas:
 - XML
 - Git e GitHub
 - Visual Studio Code
+
+### Observação sobre o repositório
+
+Como os integrantes do grupo não participaram da primeira etapa da atividade, foi necessário iniciar o desenvolvimento em um novo repositório.
+
+Dessa forma, o Scanner e o Parser foram desenvolvidos e integrados neste projeto, garantindo o funcionamento conjunto dos componentes e o atendimento aos requisitos técnicos da atividade.
 
 ## Referência
 
