@@ -2,7 +2,7 @@ Integrantes do grupo
 
 Integrante 1: Lucas Emanoel Amaral Gomes — Matrícula: 20250071250
 
-Integrante 2: [Nome completo] — Matrícula: [Número]
+Integrante 2: JOSE AUGUSTO SANTOS LOPES — Matrícula: 20260060115
 
 
 
