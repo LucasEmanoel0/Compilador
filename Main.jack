@@ -1,0 +1,8 @@
+class Main {
+    function void main() {
+        var int idade;
+        let idade = 21;
+        do Output.printString("Ola mundo");
+        return;
+    }
+}

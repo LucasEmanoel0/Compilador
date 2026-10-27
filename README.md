@@ -105,10 +105,21 @@ node teste.js
 ### Executar a integração completa
 
 ```bash
-node main.js
+node main.js Main.jack Main.xml
+```
+O programa recebe um arquivo `.jack` como entrada, realiza a análise léxica e sintática e gera um arquivo XML com a árvore de análise sintática.
+
+Exemplo de execução:
+
+```bash
+node main.js Main.jack Main.xml
 ```
 
-O Scanner identifica os tokens, o Parser analisa as estruturas sintáticas e o XmlWriter gera a representação XML do programa.
+**Arquivo de entrada:** `Main.jack`
+
+**Arquivo de saída:** `Main.xml`
+
+O nome do arquivo XML pode ser definido pelo usuário no segundo argumento do comando.
 
 ## Testes e validação
 
