@@ -73,6 +73,30 @@ readNumber() {
         column: this.column - number.length
     });
 }
+
+isLetter(char) {
+    return /[a-zA-Z_]/.test(char);
+}
+
+isAlphaNumeric(char) {
+    return this.isLetter(char) || this.isDigit(char);
+}
+
+readIdentifier() {
+    while (!this.isAtEnd() && this.isAlphaNumeric(this.peek())) {
+        this.advance();
+    }
+
+    const word = this.source.slice(this.start, this.position);
+    const type = KEYWORDS.has(word) ? "keyword" : "identifier";
+
+    this.tokens.push({
+        type: type,
+        value: word,
+        line: this.line,
+        column: this.column - word.length
+    });
+}
 }
 
 module.exports = Scanner;
