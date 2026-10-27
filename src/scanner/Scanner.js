@@ -139,6 +139,58 @@ skipBlockComment() {
 
     throw new Error("Comentário de bloco não fechado");
 }
+tokenize() {
+    while (!this.isAtEnd()) {
+        this.start = this.position;
+
+        let char = this.advance();
+
+        if (char === "/" && this.peek() === "/") {
+            this.advance();
+            this.skipLineComment();
+            continue;
+        }
+
+        if (char === "/" && this.peek() === "*") {
+            this.advance();
+            this.skipBlockComment();
+            continue;
+        }
+
+        if (this.isDigit(char)) {
+            this.readNumber();
+            continue;
+        }
+
+        if (SYMBOLS.has(char)) {
+            this.tokens.push({
+                type: "symbol",
+                value: char,
+                line: this.line,
+                column: this.column - 1
+            });
+            continue;
+        }
+
+        if (this.isLetter(char)) {
+            this.readIdentifier();
+            continue;
+        }
+
+        if (char === '"') {
+            this.readString();
+            continue;
+        }
+
+        if (!/\s/.test(char)) {
+            throw new Error(
+                `Caractere inválido: ${char} na linha ${this.line}, coluna ${this.column - 1}`
+            );
+        }
+    }
+
+    return this.tokens;
+}
 }
 
 module.exports = Scanner;
